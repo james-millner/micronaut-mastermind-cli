@@ -23,16 +23,16 @@ fun generateCode(): List<Peg> =
 
 fun guessSelection(playerPegChoice: List<Peg>, secretCode: List<Peg>): MastermindResult {
 
-    var matchedResults = emptyList<Pair<Boolean, Boolean>>().toMutableList()
-    val guessedCode = emptyList<Peg>().toMutableList()
+    val coloursSeen = emptyList<Colour>().toMutableList()
+    val matchedResults = emptyList<Pair<Boolean, Boolean>>().toMutableList()
 
     playerPegChoice.forEachIndexed { index, peg ->
         val matchedPosition = secretCode[index].colour == peg.colour
-        val matchedColour = secretCode.contains(peg)
+        var matchedColour = secretCode.contains(peg)
 
-        if (matchedColour) {
-            guessedCode.add(peg)
-            secretCode[index].colour = null //Set an unused colour to take this out of future calculations
+        when {
+            matchedColour && !coloursSeen.contains(peg.colour) -> peg.colour?.let { coloursSeen.add(it) }
+            else -> matchedColour = false
         }
 
         matchedResults.add(Pair(matchedPosition, matchedColour))
@@ -43,7 +43,7 @@ fun guessSelection(playerPegChoice: List<Peg>, secretCode: List<Peg>): Mastermin
         .toList()
         .sum()
 
-    return MastermindResult(score = score, code = guessedCode)
+    return MastermindResult(score = score, code = secretCode)
 }
 
 fun createScoreForPeg(pegPosition: Boolean, pegSameColour: Boolean): Int {

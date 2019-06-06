@@ -1,19 +1,15 @@
 package micronaut.mastermind
 
 import io.micronaut.configuration.picocli.PicocliRunner
-import io.micronaut.context.ApplicationContext
-
-import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import picocli.CommandLine.Parameters
 
 @Command(name = "micronaut-mastermind", description = ["..."],
         mixinStandardHelpOptions = true)
 class MicronautMastermindCommand : Runnable {
 
     @Option(names = ["-v", "--verbose"], description = ["..."])
-    private var verbose : Boolean = false
+    private var verbose: Boolean = false
 
     val MAX_ATTEMPTS = 12
     val MAX_SCORE = 8
@@ -36,34 +32,44 @@ class MicronautMastermindCommand : Runnable {
             return
         }
 
-        var iterations = 1
+        var successfulGuess = false
+        var iteration = 0
 
-        while(iterations <= MAX_ATTEMPTS) {
+        while (iteration < MAX_ATTEMPTS) {
 
-            println("Please enter your code in CSV format: $secretCode")
+            println("Please enter your code in CSV format. Attempt: ${iteration+1}")
 
-            val input = readLine()
-
-            val colours = input!!.split(",").map { it.toUpperCase() }.map { Peg(colour = Colour.valueOf(it)) }
+            val colours = readLine()!!.split(",")
+                    .map { it.toUpperCase() }
+                    .map { Peg(colour = Colour.valueOf(it)) }
 
             val mastermindResult = guessSelection(colours, secretCode)
 
-            if(mastermindResult.score == MAX_SCORE) {
+            if (mastermindResult.score == MAX_SCORE) {
                 println("YOU WIN!")
                 println("The secret code was: ")
                 mastermindResult.code
-                    .forEachIndexed{ index, peg -> println("$index: ${peg.colour!!.name}")}
+                        .forEachIndexed { index, peg -> println("$index: ${peg.colour!!.name}") }
+
+                successfulGuess = true
                 break
-            } else {
-                println(mastermindResult.score)
-                iterations++
             }
+
+
+            println(mastermindResult.score)
+            iteration++
+        }
+
+        if(iteration == 12 && !successfulGuess) {
+            println("Game over! The code was:")
+            println(secretCode.toTypedArray())
         }
 
     }
 
     companion object {
-        @JvmStatic fun main(args: Array<String>) {
+        @JvmStatic
+        fun main(args: Array<String>) {
             PicocliRunner.run(MicronautMastermindCommand::class.java, *args)
         }
     }
