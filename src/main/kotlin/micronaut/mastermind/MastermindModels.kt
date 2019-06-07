@@ -16,15 +16,15 @@ data class Peg(var colour: Colour?)
 data class MastermindResult(val score: Int, val code: List<Peg>)
 
 fun MastermindResult.isSuccessfulGuess(): Boolean =
-    if (this.score == MAX_SCORE) {
-        println("YOU WIN!")
-        println("The secret code was: ")
-        this.code
-                .forEachIndexed { index, peg -> println("$index: ${peg.colour!!.name}") }
+        if (this.score == MAX_SCORE) {
+            println("YOU WIN!")
+            println("The secret code was: ")
+            this.code
+                    .forEachIndexed { index, peg -> println("$index: ${peg.colour!!.name}") }
 
-        true
-    } else {
-        false
-    }
+            true
+        } else {
+            false
+        }
 
 

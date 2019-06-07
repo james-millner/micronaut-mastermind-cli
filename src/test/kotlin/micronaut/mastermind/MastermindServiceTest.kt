@@ -1,18 +1,17 @@
 package micronaut.mastermind
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 class MastermindServiceTest {
 
     @Test
     fun createScoreForPeg() =
-        assertEquals(2, createScoreForPeg(pegPosition = true, pegSameColour = true))
+            assertEquals(2, createScoreForPeg(pegPosition = true, pegSameColour = true))
 
     @Test
     fun createScoreForPegWithCorrectPosition() =
-        assertEquals(1, createScoreForPeg(pegPosition = true, pegSameColour = false))
+            assertEquals(1, createScoreForPeg(pegPosition = true, pegSameColour = false))
 
     @Test
     fun createScoreForNoMatches() =
@@ -52,7 +51,7 @@ class MastermindServiceTest {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
 
-        val expectedResult = listOf(Pair(true,true),Pair(true,true),Pair(true,true),Pair(true,true))
+        val expectedResult = listOf(Pair(true, true), Pair(true, true), Pair(true, true), Pair(true, true))
 
         assertEquals(expectedResult, getMatchResults(playerPegChoice, code))
     }
@@ -62,7 +61,7 @@ class MastermindServiceTest {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.GREEN), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
 
-        val expectedResult = listOf(Pair(true,true),Pair(false,false),Pair(true,true),Pair(true,true))
+        val expectedResult = listOf(Pair(true, true), Pair(false, false), Pair(true, true), Pair(true, true))
 
         assertEquals(expectedResult, getMatchResults(playerPegChoice, code))
     }

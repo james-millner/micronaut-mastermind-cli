@@ -4,8 +4,8 @@ import io.micronaut.configuration.picocli.PicocliRunner
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 
-val MAX_ATTEMPTS = 12
-val MAX_SCORE = 8
+const val MAX_ATTEMPTS = 12
+const val MAX_SCORE = 8
 
 @Command(name = "micronaut-mastermind", description = ["..."],
         mixinStandardHelpOptions = true)
