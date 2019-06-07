@@ -3,6 +3,7 @@ package micronaut.mastermind
 import io.micronaut.configuration.picocli.PicocliRunner
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
+import java.lang.IllegalArgumentException
 
 const val MAX_ATTEMPTS = 12
 const val MAX_SCORE = 8
@@ -34,23 +35,34 @@ class MicronautMastermindCommand : Runnable {
 
         var iteration = 0
 
-        println("You can choose from the following colours: ${availableColours.forEach{ println("${it.name} ")}}")
+        println("You can choose from the following colours:")
+        availableColours.forEach{ println(it.name) }
+
         println("--------------------------------------------------------------------------------------------------------------------------------")
 
         while (iteration < MAX_ATTEMPTS) {
 
-            println("Please enter your code in CSV format. Attempt: ${iteration + 1}")
+            try {
 
-            val colours = readLine()!!.split(",")
-                    .map { it.toUpperCase() }
-                    .map { Peg(colour = Colour.valueOf(it)) }
+                println("Please enter your code in CSV format. Attempt: ${iteration + 1}")
 
-            val mastermindResult = guessSelection(colours, secretCode)
+                val colours = readLine()!!.split(",")
+                        .map { it.toUpperCase() }
+                        .map { Peg(colour = Colour.valueOf(it)) }
 
-            if (mastermindResult.isSuccessfulGuess()) break
+                val mastermindResult = guessSelection(colours, secretCode)
 
-            println(mastermindResult.score)
-            iteration++
+                if (mastermindResult.isSuccessfulGuess()) break
+
+                println(mastermindResult.score)
+                iteration++
+            } catch (exc: IllegalArgumentException) {
+                println("--------------------------------------------------------------------------------------------------------------------------------")
+                println("The available colours are: ")
+                availableColours.forEach{ println(it.name) }
+                println("Please try again!")
+                println("--------------------------------------------------------------------------------------------------------------------------------")
+            }
         }
 
         if (iteration == 12) {
