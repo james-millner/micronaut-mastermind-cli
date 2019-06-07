@@ -3,7 +3,6 @@ package micronaut.mastermind
 import io.micronaut.configuration.picocli.PicocliRunner
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import java.lang.IllegalArgumentException
 
 const val MAX_ATTEMPTS = 12
 const val MAX_SCORE = 8
@@ -43,7 +42,7 @@ class MicronautMastermindCommand : Runnable {
         var iteration = 0
 
         println("You can choose from the following colours:")
-        availableColours.forEach{ println(it.name) }
+        availableColours.forEach { println(it.name) }
 
         println("--------------------------------------------------------------------------------------------------------------------------------")
 
@@ -66,7 +65,7 @@ class MicronautMastermindCommand : Runnable {
             } catch (exc: IllegalArgumentException) {
                 println("--------------------------------------------------------------------------------------------------------------------------------")
                 println("The available colours are: ")
-                availableColours.forEach{ println(it.name) }
+                availableColours.forEach { println(it.name) }
                 println("Please try again!")
                 println("--------------------------------------------------------------------------------------------------------------------------------")
             }
@@ -74,7 +73,7 @@ class MicronautMastermindCommand : Runnable {
 
         if (iteration == 12) {
             println("Game over! The code was:")
-            secretCode.forEach{ println(it) }
+            secretCode.forEach { println(it) }
         }
 
     }
