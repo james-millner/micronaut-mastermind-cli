@@ -10,10 +10,10 @@
 ```
 
 ### Introduction
-This small project was inspired by the Leeds Code Dojo (https://www.meetup.com/Leeds-Code-Dojo/) and the most recent 
-event which was the Mastermind Coding Kata evening.
+This small project was inspired by the Leeds Code Dojo (https://www.meetup.com/Leeds-Code-Dojo/) and their most recent 
+event, the Mastermind Coding Kata evening hosted at Sky Betting & Gaming.
 
-The goal was of the evening was simple:
+The goals of the evening were simple:
 - Have fun
 - Pair Program
 - Learn something new!
@@ -21,9 +21,10 @@ The goal was of the evening was simple:
 
 My original attempt for this challenge on the evening can also be found on github, which was a collaboration between myself, Zahir Ahmed & Sep Russell. (https://github.com/james-millner/Mastermind)
 
-After the event I thought I'd spend a little more time on the challenge and do some refactoring, generally playing around with some more code!
+After the event I thought I'd spend a little more time on the challenge and do some refactoring, generally playing around with some more code! 
+Which lead to the creation of this repository.
 
-This lead me to develop a solution in Micronaut, as an intended CLI tool to play Mastermind. 
+This solution has been created in Micronaut, as an intended CLI tool to play Mastermind. 
 
 For reference see:
 
@@ -32,7 +33,7 @@ For reference see:
 
 ## How to play:
 
-There is a make file for building and running the application. 
+There is a Makefile for building and running the application. 
 
 Run the following commands:
 1. `make build-and-run` - this will clean, package and run the application
