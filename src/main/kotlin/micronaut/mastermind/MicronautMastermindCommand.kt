@@ -4,15 +4,15 @@ import io.micronaut.configuration.picocli.PicocliRunner
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 
+val MAX_ATTEMPTS = 12
+val MAX_SCORE = 8
+
 @Command(name = "micronaut-mastermind", description = ["..."],
         mixinStandardHelpOptions = true)
 class MicronautMastermindCommand : Runnable {
 
     @Option(names = ["-v", "--verbose"], description = ["..."])
     private var verbose: Boolean = false
-
-    val MAX_ATTEMPTS = 12
-    val MAX_SCORE = 8
 
     override fun run() {
 
@@ -32,12 +32,11 @@ class MicronautMastermindCommand : Runnable {
             return
         }
 
-        var successfulGuess = false
         var iteration = 0
 
         while (iteration < MAX_ATTEMPTS) {
 
-            println("Please enter your code in CSV format. Attempt: ${iteration+1}")
+            println("Please enter your code in CSV format. Attempt: ${iteration + 1}")
 
             val colours = readLine()!!.split(",")
                     .map { it.toUpperCase() }
@@ -45,27 +44,19 @@ class MicronautMastermindCommand : Runnable {
 
             val mastermindResult = guessSelection(colours, secretCode)
 
-            if (mastermindResult.score == MAX_SCORE) {
-                println("YOU WIN!")
-                println("The secret code was: ")
-                mastermindResult.code
-                        .forEachIndexed { index, peg -> println("$index: ${peg.colour!!.name}") }
-
-                successfulGuess = true
-                break
-            }
-
+            if (mastermindResult.isSuccessfulGuess()) break
 
             println(mastermindResult.score)
             iteration++
         }
 
-        if(iteration == 12 && !successfulGuess) {
+        if (iteration == 12) {
             println("Game over! The code was:")
             println(secretCode.toTypedArray())
         }
 
     }
+
 
     companion object {
         @JvmStatic
