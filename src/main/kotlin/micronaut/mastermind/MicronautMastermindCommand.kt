@@ -34,6 +34,9 @@ class MicronautMastermindCommand : Runnable {
 
         var iteration = 0
 
+        println("You can choose from the following colours: ${availableColours.forEach{ println("${it.name} ")}}")
+        println("--------------------------------------------------------------------------------------------------------------------------------")
+
         while (iteration < MAX_ATTEMPTS) {
 
             println("Please enter your code in CSV format. Attempt: ${iteration + 1}")
@@ -52,7 +55,7 @@ class MicronautMastermindCommand : Runnable {
 
         if (iteration == 12) {
             println("Game over! The code was:")
-            println(secretCode.toTypedArray())
+            secretCode.forEach{ println(it) }
         }
 
     }
