@@ -21,7 +21,7 @@ class MastermindServiceTest {
     fun testGuessSelectionForOneFullMatchDupeColours() {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.RED), Peg(Colour.RED), Peg(Colour.RED))
-        val mastermind = guessSelection(playerPegChoice, code)
+        val mastermind = submitPlayersGuess(playerPegChoice, code)
         assertEquals(2, mastermind.score)
     }
 
@@ -29,7 +29,7 @@ class MastermindServiceTest {
     fun testGuessSelectionPositionForOneHalfMatches() {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.GREEN), Peg(Colour.YELLOW), Peg(Colour.BLUE))
-        val mastermind = guessSelection(playerPegChoice, code)
+        val mastermind = submitPlayersGuess(playerPegChoice, code)
 
         assertEquals(3, mastermind.score)
     }
@@ -38,7 +38,7 @@ class MastermindServiceTest {
     fun testGuessSelectionPositionForFullMatches() {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
-        val mastermind = guessSelection(playerPegChoice, code)
+        val mastermind = submitPlayersGuess(playerPegChoice, code)
 
         assertEquals(8, mastermind.score)
     }
@@ -53,7 +53,7 @@ class MastermindServiceTest {
 
         val expectedResult = listOf(Pair(true, true), Pair(true, true), Pair(true, true), Pair(true, true))
 
-        assertEquals(expectedResult, getMatchResults(playerPegChoice, code))
+        assertEquals(expectedResult, determineCorrectGuesses(playerPegChoice, code))
     }
 
     @Test
@@ -63,6 +63,6 @@ class MastermindServiceTest {
 
         val expectedResult = listOf(Pair(true, true), Pair(false, false), Pair(true, true), Pair(true, true))
 
-        assertEquals(expectedResult, getMatchResults(playerPegChoice, code))
+        assertEquals(expectedResult, determineCorrectGuesses(playerPegChoice, code))
     }
 }

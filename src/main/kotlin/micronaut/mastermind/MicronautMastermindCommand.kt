@@ -17,8 +17,14 @@ class MicronautMastermindCommand : Runnable {
 
     override fun run() {
 
-        val secretCode = generateCode()
+        val mastermindActions = MastermindActions()
 
+        val mastermindGame = MastermindGame(
+                mastermindActions::generateCode,
+                mastermindActions::submitPlayersGuess
+        )
+
+        val secretCode = mastermindGame.generateCode()
         println(" ___      ___       __        ________  ___________  _______   _______   ___      ___   __    _____  ___   ________   \n" +
                 "|\"  \\    /\"  |     /\"\"\\      /\"       )(\"     _   \")/\"     \"| /\"      \\ |\"  \\    /\"  | |\" \\  (\\\"   \\|\"  \\ |\"      \"\\  \n" +
                 " \\   \\  //   |    /    \\    (:   \\___/  )__/  \\\\__/(: ______)|:        | \\   \\  //   | ||  | |.\\\\   \\    |(.  ___  :) \n" +
@@ -32,6 +38,7 @@ class MicronautMastermindCommand : Runnable {
             print("Mastermind version 0.1")
             return
         }
+
 
         var iteration = 0
 
@@ -50,7 +57,7 @@ class MicronautMastermindCommand : Runnable {
                         .map { it.toUpperCase() }
                         .map { Peg(colour = Colour.valueOf(it)) }
 
-                val mastermindResult = guessSelection(colours, secretCode)
+                val mastermindResult = mastermindGame.playTurn(colours, secretCode)
 
                 if (mastermindResult.isSuccessfulGuess()) break
 
