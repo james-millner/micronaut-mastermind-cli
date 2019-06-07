@@ -5,6 +5,13 @@ import org.junit.jupiter.api.Test
 
 class MastermindServiceTest {
 
+    val mastermindActions = MastermindActions()
+
+    val mastermindGame = MastermindGame(
+            mastermindActions::generateCode,
+            mastermindActions::submitPlayersGuess
+    )
+
     @Test
     fun createScoreForPeg() =
             assertEquals(2, createScoreForPeg(pegPosition = true, pegSameColour = true))
@@ -21,7 +28,7 @@ class MastermindServiceTest {
     fun testGuessSelectionForOneFullMatchDupeColours() {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.RED), Peg(Colour.RED), Peg(Colour.RED))
-        val mastermind = submitPlayersGuess(playerPegChoice, code)
+        val mastermind = mastermindGame.playTurn(playerPegChoice, code)
         assertEquals(2, mastermind.score)
     }
 
@@ -29,7 +36,7 @@ class MastermindServiceTest {
     fun testGuessSelectionPositionForOneHalfMatches() {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.GREEN), Peg(Colour.YELLOW), Peg(Colour.BLUE))
-        val mastermind = submitPlayersGuess(playerPegChoice, code)
+        val mastermind = mastermindGame.playTurn(playerPegChoice, code)
 
         assertEquals(3, mastermind.score)
     }
@@ -38,13 +45,13 @@ class MastermindServiceTest {
     fun testGuessSelectionPositionForFullMatches() {
         val code = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
         val playerPegChoice = listOf(Peg(Colour.RED), Peg(Colour.YELLOW), Peg(Colour.ORANGE), Peg(Colour.PURPLE))
-        val mastermind = submitPlayersGuess(playerPegChoice, code)
+        val mastermind = mastermindGame.playTurn(playerPegChoice, code)
 
         assertEquals(8, mastermind.score)
     }
 
     @Test
-    fun testGenerateCode() = assertEquals(4, generateCode().size)
+    fun testGenerateCode() = assertEquals(4, mastermindGame.generateCode().size)
 
     @Test
     fun testGetMatchResultsExactMatch() {

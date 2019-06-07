@@ -1,7 +1,5 @@
 package micronaut.mastermind
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-
 val availableColours = setOf(Colour.RED, Colour.YELLOW, Colour.GREEN, Colour.BLUE, Colour.ORANGE, Colour.PURPLE)
 
 enum class Colour {
